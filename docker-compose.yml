@@ -16,7 +16,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - monitoring
+      - monitoring # So it can talk to prometheus
   grafana:
     image: grafana/grafana-enterprise
     container_name: grafana
@@ -24,7 +24,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - monitoring
+      - monitoring # So it can talk to prometheus
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
@@ -41,7 +41,7 @@ services:
     expose:
       - 9100
     networks:
-      - monitoring
+      - monitoring # So it can talk to prometheus
 
   prometheus:
     image: prom/prometheus:latest
@@ -59,6 +59,6 @@ services:
     expose:
       - 9090
     ports:
-      - "9090:9090"
+      - "9090:9090" # So you can access the UI from your machine
     networks:
-      - monitoring
+      - monitoring # So it can talk to node-exporter, grafana, and weatherapi
