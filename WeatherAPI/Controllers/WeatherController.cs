@@ -7,7 +7,7 @@ namespace WeatherAPI.Controllers;
 [ApiController]
 [Route("api/v1/weather")]
 [Produces("application/json")]
-public sealed class WeatherController : ControllerBase
+public sealed class WeatherController(ILogger<WeatherController> logger) : ControllerBase
 {
     private readonly string[] _summaries =
     [
@@ -29,6 +29,8 @@ public sealed class WeatherController : ControllerBase
             .ToArray();
 
         await Task.Delay(Random.Shared.Next(5, 100)); // Simulate external API call to fetch data...
+        
+        logger.LogInformation("Fetching weather forecast data for city {City}", city);
         
         return Ok(new CityWeatherForecast(city, forecasts.ToList()));
     }
